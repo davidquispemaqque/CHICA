@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarai, Mi Eterno Amor</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Roboto:wght@300;400&family=Dancing+Script&display=swap');
+        
+        body, html {
+            height: 100%;
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #000;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        .container {
+            text-align: center;
+            max-width: 800px;
+            padding: 20px;
+        }
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3em;
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255,215,0,0.5);
+        }
+        .heart {
+            font-size: 100px;
+            color: #ff4d4d;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .heart:hover {
+            transform: scale(1.1);
+        }
+        #message {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .photo {
+            width: 150px;
+            height: 150px;
+            margin: 10px;
+            background-color: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .floating-heart {
+            position: fixed;
+            font-size: 20px;
+            user-select: none;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sarai, Mi Eterno Amor</h1>
+        <div class="heart" id="heart">❤️</div>
+        <p id="message"></p>
+        <div class="gallery" id="gallery"></div>
+    </div>
+
+    <script>
+        const heart = document.getElementById('heart');
+        const message = document.getElementById('message');
+        const gallery = document.getElementById('gallery');
+        let clicks = 0;
+
+        const messages = [
+            "Princesa, sabes? Eres la luz de mis días",
+            "Cada momento contigo es mágico",
+            "Tu amor me inspira a ser mejor cada día",
+            "Eres mi sueño hecho realidad",
+            "Contigo, el futuro es brillante",
+            "No puedo esperar para pasar mi vida junto a ti, te amooooooooooooooooooooooooooo princesa bella"
+        ];
+
+        const photos = [
+            "bb.jpg", // Actualiza estos nombres con los nombres reales de tus imágenes
+            "princesa.jpg",
+            "nena.jpg",
+            "helado.jpg",
+            "bonita.jpg"
+        ];
+
+        heart.addEventListener('click', () => {
+            clicks++;
+            if (clicks <= messages.length) {
+                message.textContent = messages[clicks - 1];
+                if (clicks <= photos.length) {
+                    addPhoto();
+                }
+            } else {
+                message.textContent = "Te amo infinitamente, Mi vida, princesa mia Sarai";
+            }
+            createFloatingHearts();
+        });
+
+        function addPhoto() {
+            const photo = document.createElement('div');
+            photo.classList.add('photo');
+            photo.innerHTML = `<img src="${photos[clicks - 1]}" alt="Nosotros">`;
+            gallery.appendChild(photo);
+        }
+
+        function createFloatingHearts() {
+            for (let i = 0; i < 10; i++) {
+                const heart = document.createElement('div');
+                heart.textContent = '❤️';
+                heart.classList.add('floating-heart');
+                heart.style.left = Math.random() * window.innerWidth + 'px';
+                heart.style.top = window.innerHeight + 'px';
+                document.body.appendChild(heart);
+
+                animateHeart(heart);
+            }
+        }
+
+        function animateHeart(heart) {
+            const animationDuration = 3000 + Math.random() * 3000;
+            const xMovement = (Math.random() - 0.5) * 100;
+            
+            heart.animate([
+                { transform: `translate(${xMovement}px, 0px)`, opacity: 1 },
+                { transform: `translate(${xMovement * 2}px, -${window.innerHeight + 100}px)`, opacity: 0 }
+            ], {
+                duration: animationDuration,
+                easing: 'ease-out'
+            }).onfinish = () => heart.remove();
+        }
+    </script>
+</body>
+</html>
